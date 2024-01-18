@@ -15,10 +15,7 @@ import "../styles/Chat.css";
 export const Chat = ({ room }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [isButtonClicked, setIsButtonClicked] = useState(false);
-  const [messageHistory, setMessageHistory] = useState([]);
   const messagesRef = collection(db, "messages");
-
 
   useEffect(() => {
     const queryMessages = query(
@@ -48,9 +45,8 @@ export const Chat = ({ room }) => {
       user: auth.currentUser.displayName,
       room,
     });
-    setMessageHistory((prevHistory) => [...prevHistory, auth.currentUser.displayName+":"+newMessage]);
+
     setNewMessage("");
-   
   };
 
   return (
@@ -62,16 +58,9 @@ export const Chat = ({ room }) => {
         {messages.map((message) => (
           <div key={message.id} className="message">
             <span className="user">{message.user}:</span> {message.text}
-           
           </div>
         ))}
       </div>
-      <div className="message-history">
-        {messageHistory.map((message, index) => (
-          <h3 key={index}>{message}</h3>
-        ))}
-      </div>
-      
       <form onSubmit={handleSubmit} className="new-message-form">
         <input
           type="text"
@@ -83,9 +72,7 @@ export const Chat = ({ room }) => {
         <button type="submit" className="send-button">
           Send
         </button>
-        
       </form>
-   
     </div>
   );
 };
