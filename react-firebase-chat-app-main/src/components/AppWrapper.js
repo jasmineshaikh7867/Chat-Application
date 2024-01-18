@@ -1,7 +1,6 @@
 import { auth } from "../firebase-config.js";
 import { signOut } from "firebase/auth";
 import React from "react";
-
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
